@@ -8,15 +8,15 @@ import com.example.githubapiapplication.model.data.RepoCommits
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class CommitViewModel constructor(private val repository: CommitsRepository) : ViewModel() {
+class CommitViewModel @Inject constructor(val repository: CommitsRepository) : ViewModel() {
 
     val _commits = MutableLiveData<List<RepoCommits>>()
 
     val commits: LiveData<List<RepoCommits>> = _commits
 
     val errorMessage = MutableLiveData<String>()
-
 
     fun getRepoCommits() {
 
