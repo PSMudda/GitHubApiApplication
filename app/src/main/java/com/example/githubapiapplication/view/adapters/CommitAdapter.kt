@@ -6,25 +6,28 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.githubapiapplication.databinding.CommitListItemBinding
-import com.example.githubapiapplication.model.data.Commit
+import com.example.githubapiapplication.model.data.RepoCommits
 
-class CommitAdapter() : ListAdapter<Commit, CommitAdapter.CommitViewHolder>(DiffCallback) {
-    //Test data
-    var commits = mutableListOf(Commit("1","Pritam Mudda","1234abcd5678ahsjhfjdkjdhjdjsdjhksjhksjhdfkshfd","Initial commit"),
-        Commit("2","Pritam Mudda","1234abcd5678ahsjhfjdkjdhjdjsdjhksjhksjhdfkshfd","Initial commit"),
-        Commit("3","Pritam Mudda","1234abcd5678ahsjhfjdkjdhjdjsdjhksjhksjhdfkshfd","Initial commit"),
-        Commit("4","Pritam Mudda","1234abcd5678ahsjhfjdkjdhjdjsdjhksjhksjhdfkshfd","Initial commit")
-    )
+class CommitAdapter : ListAdapter<RepoCommits, CommitAdapter.CommitViewHolder>(DiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommitViewHolder {
+    var commits = mutableListOf<RepoCommits>()
+
+    fun setCommitList(commits: List<RepoCommits>) {
+        this.commits = commits.toMutableList()
+        notifyDataSetChanged()
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int):
+            CommitViewHolder {
         return CommitViewHolder(CommitListItemBinding.inflate(LayoutInflater.from(parent.context)))
     }
 
     override fun onBindViewHolder(holder: CommitViewHolder, position: Int) {
         val commit = commits[position]
-        holder.binding.author.text = commit.author
-        holder.binding.commitHash.text = commit.sha
-        holder.binding.commitMessage.text = commit.message
+
+        holder.binding.author.text = commit.commits.author.name
+        holder.binding.commitHash.text = commit.commits.tree.sha
+        holder.binding.commitMessage.text = commit.commits.message
     }
 
     override fun getItemCount(): Int {
@@ -32,18 +35,19 @@ class CommitAdapter() : ListAdapter<Commit, CommitAdapter.CommitViewHolder>(Diff
     }
 
     class CommitViewHolder(
-        var binding: CommitListItemBinding
+        var binding:
+        CommitListItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
     }
 
-    companion object DiffCallback : DiffUtil.ItemCallback<Commit>() {
+    companion object DiffCallback : DiffUtil.ItemCallback<RepoCommits>() {
 
-        override fun areItemsTheSame(oldItem: Commit, newItem: Commit): Boolean {
+        override fun areItemsTheSame(oldItem: RepoCommits, newItem: RepoCommits): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Commit, newItem: Commit): Boolean {
+        override fun areContentsTheSame(oldItem: RepoCommits, newItem: RepoCommits): Boolean {
             return oldItem == newItem
         }
     }

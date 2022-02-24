@@ -1,3 +1,5 @@
 package com.example.githubapiapplication.model.data
 
-data class Commit(val id:String,val author:String,val sha:String,val message:String)
+import com.google.gson.annotations.SerializedName
+
+data class Commit(@SerializedName("author")val author: Author, @SerializedName("tree") val tree: Tree, @SerializedName("message") val message:String)
