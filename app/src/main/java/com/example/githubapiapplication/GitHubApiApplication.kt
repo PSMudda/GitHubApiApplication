@@ -5,7 +5,7 @@ import com.example.githubapiapplication.di.APIComponent
 import com.example.githubapiapplication.di.DaggerAPIComponent
 
 
-class GitHubApiApplication : Application() {
+open class GitHubApiApplication : Application() {
 
     companion object {
         lateinit var apiComponent: APIComponent
@@ -16,7 +16,7 @@ class GitHubApiApplication : Application() {
         initDaggerComponent()
     }
 
-    private fun initDaggerComponent() {
+    open fun initDaggerComponent() {
         apiComponent = DaggerAPIComponent
             .builder()
             .build()

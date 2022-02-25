@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-class HttpModule constructor() {
+class HttpModule {
 
     var baseURL = "https://api.github.com/"
 
